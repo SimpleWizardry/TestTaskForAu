@@ -1,0 +1,304 @@
+.main-block {
+    background: #E5E5E5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.form-block {
+   width: 1169px;
+   height: 758px;
+   background: white;
+   padding: 90px 90px;
+}
+
+.form-block__greetings-row {
+    height: 34px;
+    width: 100%;
+    margin: 0;
+    padding-left: 10px;
+} 
+
+.form-block__greetings-text {
+    font-family: arial;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 34.5px;
+    margin-left: 0;
+}
+
+.gray-text {
+    color: #666666;
+}
+
+.form-block__change-status-line {
+    font-family: arial;
+    color: #0C77BB;
+    font-size: 12px;
+    border-bottom: 1px dotted #0C77BB;
+    width: 88px;
+    line-height: 12px;
+    margin-bottom: 0;
+    margin-top: 18px;
+}
+
+.form-block__change-status-line:hover {
+    color: #999999;
+    cursor: pointer;
+    //border-bottom: 1px solid #999999;
+    border-bottom: none;
+}
+
+.form-block__status-holder {
+  height: 53px;
+}
+
+.form-block__input-line {
+  height: 95px;
+}
+
+.form-block__input-title {
+    font-family: arial;
+    font-size: 21px;
+}
+
+/* ЗАГОТОВКА ТУЛТИПА НА CSS */
+
+.form-block__status-tooltip {
+  position: absolute;
+  width: 503px;
+  height: 44px;
+  top: 9px;
+  margin-left: -8px;
+  min-width: 200px;
+  text-align: left;
+  background: #EAEAEA;
+  color: #404040; 
+  padding: 2% 2%;
+  font-size: 14px;
+  cursor: default;
+}
+
+.form-block__status-tooltip::before{
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 2%;
+    border: 7px solid transparent;
+    border-bottom-color: #EAEAEA;
+}
+
+
+.form-block__input-field {
+    height: 31px;
+    font-family: arial;
+    font-size: 15px;
+    //font-weight: 700;
+    color: #000000;
+    margin-left: -8px;
+    border-radius: 0;
+    border: 1px solid #999999;
+}
+
+.form-block__input-description {
+    font-family: arial;
+    font-size: 11px;
+    color: #999999;
+    margin-left: 20px;
+}
+
+.form-block__input-type_checkbox {
+  margin-left: -8px;
+}
+
+.form-block__input-type_checkbox-description {
+  font-family: arial;
+  font-size: 14px;
+}
+
+.form-block__input-type_button_change-button {
+    border-radius: 0;
+    border: none;
+    background: #71C838;
+    width: 119px;
+    height: 40px;
+    margin-left: -8px;
+}
+
+@media (max-width: 1200px) { 
+    .form-block__greetings-text {
+        font-size: 24px;
+    }
+
+    .form-block__input-title {
+        font-size: 19px;
+    }
+
+    .form-block__status-tooltip {
+        width: 400px;
+    }
+
+    .form-block__input-type_checkbox-description {
+        font-size: 13px;
+    }
+
+    .form-block__input-field {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 990px) { 
+    .form-block__greetings-text {
+        font-size: 20px;
+    }
+
+    .form-block__change-status-line {
+        font-size: 11px;
+        width: 80px;
+    }
+
+    .form-block__input-title {
+        font-size: 15px;
+    }
+
+    .form-block__status-tooltip {
+        width: 300px;
+        padding: 4% 4%;
+        font-size: 12px;
+    }
+
+    .form-block__input-description {
+        font-size: 9px;
+    }
+
+    .form-block__input-type_checkbox-description {
+        font-size: 11px;
+    }
+
+    .form-block__input-field {
+        width: 217px;
+        font-size: 12px;
+    }
+
+    .form-block__input-field,
+    .form-block__status-tooltip,
+    .form-block__input-type_checkbox,
+    .form-block__input-type_button_change-button {
+        margin-left: 8px;
+    }
+
+    .form-block__status-tooltip::before {
+        left: 6%;
+    }
+}
+
+@media (max-width: 768px) { 
+    .form-block {
+        padding: 60px 40px;
+    }
+
+    .form-block__greetings-text {
+        font-size: 18px;
+    }
+
+    .form-block__status-tooltip {
+        width: 280px;
+        padding: 7% 7%;
+        font-size: 11px;
+    }
+
+    .form-block__input-title {
+        font-size: 14px;
+    }
+
+    .form-block__input-field {
+        width: 184px;
+        font-size: 11px;
+    }
+
+    .form-block__input-type_button_change-button {
+        font-size: 14px;
+    }
+
+    .form-block__status-tooltip::before {
+        left: 8%;
+    }
+}
+
+@media (max-width: 576px) { 
+    .form-block__status-tooltip::before {
+        display: none;
+    }
+
+    .form-block__greetings-text {
+        font-size: 16px;
+    }
+
+    .form-block__status-tooltip {
+        height: auto;
+        width: auto;
+        padding: 2% 2%;
+        font-size: 10px;
+        margin-top: 10px;
+    }
+
+    .form-block__change-status-line {
+        font-size: 9px;
+        width: 67px;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 389px) {
+    .form-block {
+        padding: 40px 20px;
+    }
+
+    .form-block__greetings-text {
+        font-size: 14px;
+        line-height: inherit;
+    }
+
+    .form-block__status-holder {
+        height: 75px;
+    }
+
+    .form-block__status-tooltip {
+        height: auto;
+        width: auto;
+        padding: 2% 2%;
+        font-size: 10px;
+        margin-top: 18px;
+    }
+
+    .form-block__input-title {
+        font-size: 12px;
+    }
+
+    .form-block__input-description {
+        font-size: 8px;
+    }
+
+    .form-block__input-type_checkbox-description {
+        font-size: 9px;
+    }
+
+    .form-block__input-field {
+        height: 25px;
+    }
+
+    .row {
+        padding-top: 0;
+    }
+
+    .form-block__input-title {
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+}
