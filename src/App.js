@@ -1,11 +1,16 @@
-//import logo from './logo.svg';
-//import React, { useState, useEffect } from 'react';
+import citiesInitArray from './data/cities.json';
+import Greetings from './js/components/greetings/Greetings.js'
+import CityPicker from './js/components/cityPicker/CityPicker.js'
+import CustomInput from './js/components/customInput/CustomInput.js'
+import GreatHRComponent from './js/components/greatHRComponent/GreatHRComponent.js'
+import CustomCheckbox from './js/components/customCheckbox/CustomCheckbox.js'
+import SubmitButton from './js/components/submitButton/SubmitButton.js'
+import React, { useState, useEffect } from 'react';
 import {
     Container,
     Row,
     Col,
-    Form,
-    Button
+    Button,
 } 
 from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,203 +18,282 @@ import './App.scss';
 
 function App() {
 
+  const [show, setShow] = useState(false);
+  const [userName] = useState('Человек №3596941');
+  const [target, setTarget] = useState(null);
+  const [status, setStatus] = useState('Прежде чем действовать, надо понять');
+  const [statusCopy, setStatusCopy] = useState(status);
+  const [citiesArray, setCitiesArray] = useState(false);
+  const [city, setCity] = useState('');
+
+  const [lastChanges, setLastChanges] = useState('15 мая 2012 в 14:55:17');
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const [password, setPassword] = useState(''); 
+  const [passwordHasError, setPasswordHasError] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+
+  const [checkingPassword, setCheckingPassword] = useState('');
+  const [checkingPasswordHasError, setCheckingPasswordHasError] = useState(false);  
+  const [checkingPasswordError, setCheckingPasswordError] = useState('');
+  const [isCheckingPasswordChanged,setIsCheckingPasswordChanged] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [emailHasError, setEmailHasError] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [isEmailChanged,setIsEmailChanged] = useState(false);
+
+  const [approveMailing, setApproveMailing] = useState(false);
+
+  const textInputHandler =(e) => {
+    if (e.target.name === 'status-input') {
+      setStatusCopy(e.target.value);
+    } 
+    else if (e.target.name === 'password')
+    {
+      setPassword(e.target.value);
+    }
+    else if (e.target.name === 'checking-password')
+    {
+      setCheckingPassword(e.target.value);
+      setIsCheckingPasswordChanged(true)
+    }
+    else if (e.target.name === 'email')
+    {
+      setEmail(e.target.value);
+      setIsEmailChanged(true)
+    }
+  }
+
+  const toggleMailing = () => {
+    setApproveMailing(!approveMailing);
+  }
+
+/*  PASSWORD VALIDATION */
+  useEffect(() => {
+      if (password.length < 5) {
+        setPasswordError('Используйте не менее 5 символов')
+        if (!password) {
+          setPasswordError('Укажите пароль')
+        }
+      } 
+      else
+      {
+        setPasswordHasError(false)
+      }
+  }, [password]);
+
+/*  CHECKING PASSWORD VALIDATION */
+  useEffect(() => {
+    if(!checkingPassword && password && isCheckingPasswordChanged) {
+      setCheckingPasswordHasError(true)
+      setCheckingPasswordError('Повторите пароль')
+    }
+    else if((checkingPassword !== password) && isCheckingPasswordChanged)
+    {
+      setCheckingPasswordHasError(true)
+      setCheckingPasswordError('Пароли не совпадают')
+    } 
+    else 
+    {
+      setCheckingPasswordHasError(false)
+    }
+
+  }, [checkingPassword, password]);
+
+  /*  EMAIL VALIDATION */
+  useEffect(() => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(String(email).toLowerCase()) && isEmailChanged) {
+      setEmailHasError(true)
+      setEmailError('Неверный E-mail')
+    } else {
+      setEmailHasError(false)
+    }
+  }, [email,isEmailChanged]);
+
+  /*  FINAL VALIDATION */
+    useEffect(() => {
+      if (isCheckingPasswordChanged && password && email && !passwordHasError && !checkingPasswordHasError && !emailHasError) {
+        setIsFormValid(true)
+      } else {
+        setIsFormValid(false)
+      }
+    }, [passwordHasError, checkingPasswordHasError, emailHasError, isCheckingPasswordChanged, password, email]);
+
+  const statusClickHandler = (e) => {
+    setShow(!show);
+    setTarget(e.target);
+    setStatusCopy(status);
+  };
+
+  const confirmNewStatus = () => {
+    setStatus(statusCopy);
+    setShow(false);
+  }
+
+  const closePopover = () => {
+    setShow(false);
+  }
+
+  const cityChangeHandler = (e) => {
+    setCity(e.target.value);
+  }
+
+  const saveChangesHandler = () => {
+    let data = {
+      status: status,
+      city: city,
+      password: password,
+      email: email,
+      approveMailing: approveMailing
+    }
+    data = JSON.stringify(data)
+
+    var firstOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timezone: 'UTC',
+      ignorePunctuation: true
+    };
+
+    var secondOptions = {
+      timezone: 'UTC',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    };
+    
+    let date = new Date();
+    date =  date.toLocaleString("ru", firstOptions) + ' в ' + date.toLocaleString("ru", secondOptions)
+    setLastChanges(date);
+
+    console.log(data)
+  }
+
+  const focusHandler = (e) => {
+    if (e.target.name === 'password') {
+      if(!password) {
+        setPasswordHasError(true)
+        setPasswordError('Укажите пароль')
+      }
+      else if (password.length < 5) {
+        setPasswordHasError(true)
+        setPasswordError('Используйте не менее 5 символов')
+      }
+    }
+    else if (e.target.name === 'checking-password') {
+      if(!checkingPassword && password) {
+        setCheckingPasswordHasError(true)
+        setCheckingPasswordError('Повторите пароль')
+      }      
+    }
+    else if (e.target.name === 'email') {
+      if(!email) {
+        setEmailHasError(true)
+        setEmailError('Укажите E-mail')
+      } else if(emailHasError){
+        return;
+      } 
+    }
+  }
+
+
+  useEffect(() => {
+    let cities = citiesInitArray.filter(cityEl => cityEl.population > 50000).sort();
+    let theBiggestCity = cities[0];
+    let indexOfTBC = 0;
+    cities.forEach((cityEl,i,cities) => {
+      if (+cityEl.population >=  +theBiggestCity.population) {
+        theBiggestCity = cities[i];
+        indexOfTBC = i;
+      }
+    })
+    cities.unshift(cities.splice(indexOfTBC, 1)[0]);
+    setCitiesArray(cities);    
+  },[citiesInitArray]);
+
+  if (!citiesArray) {
+      return <div>LOADING SCREEN</div>
+  }
+
   return (
+
     <Container className='main-block' fluid>
       <Container className='form-block'>
-        <Row className='form-block__greetings-row' noGutters>
-          <Col sm={9} md={8} lg={7} className='form-block__greetings-text'>
-            <span className="gray-text"> Здравствуйте, </span> Человек №3596941            
-          </Col>
-          <Col 
-            sm={2} 
-            md={{ span: 3, offset: 1 }} 
-            lg={{ span: 4, offset: 1 }} 
-          >
-            <p className='form-block__change-status-line'>
-              Сменить статус
-            </p>          
-          </Col>          
-        </Row>
-        <Row className='form-block__status-holder' noGutters>
-          <Col
-            sm={{ span: 5, offset: 3 }} 
-            md={{ span: 6, offset: 3 }} 
-            lg={{ span: 7, offset: 3 }}
-          >
-            <div className='form-block__status-tooltip'>
-              Прежде чем действовать, надо понять
-            </div>
-          </Col>
-        </Row>
-        <Row className='form-block__input-line form-block__city-picker' noGutters>
-          <Col
-            className='d-flex align-items-center'
-            style={{ paddingLeft: '10px' }}
-            sm={3} 
-            md={3} 
-            lg={3}
-          >
-            <Form.Label className='form-block__input-title no-margin'>
-              Ваш город
-            </Form.Label>
-          </Col>
-          <Col
-            className='d-flex align-items-center'
-            sm={5} 
-            md={5} 
-            lg={4}
-          >
-            <Form.Control as="select" className="form-block__input-field" size="sm">
-              <option>Красноярск</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Control>
-          </Col>
-        </Row>
 
-        <hr className='no-margin' />
+        <Greetings 
+          userName={userName} 
+          show={show}
+          target={target}
+          status={status}
+          statusCopy={statusCopy}
+          clickHandler={statusClickHandler}
+          inputHandler={textInputHandler}
+          confirmHandler={confirmNewStatus}
+          closePopover={closePopover}   
+        />
 
-        <Row style={{ height: '90px'}} className='form-block__input-line' noGutters>
-          <Col
-            className='d-flex align-items-center'
-            style={{ paddingLeft: '10px' }}
-            sm={3} 
-            md={3} 
-            lg={3}
-          >
-            <Form.Label className='form-block__input-title no-margin'>
-              Пароль
-            </Form.Label>
-          </Col>
-          <Col
-            className='d-flex align-items-center'
-            sm={5} 
-            md={5} 
-            lg={4}
-          >
-            <Form.Control type="password" className="form-block__input-field" size="sm"/>
-          </Col>
-          <Col
-            className='d-flex align-items-center'
-            sm={4} 
-            md={4} 
-            lg={5}
-          >
-            <div className="form-block__input-description">
-              Ваш новый пароль должен содержать не менее 5 символов.
-            </div>
-          </Col>
-        </Row>
+        <CityPicker 
+          city={city}
+          citiesArray={citiesArray}
+          selectHandler={cityChangeHandler}
+        />
 
-        <Row style={{ height: '90px', paddingTop: '10px'}} className='form-block__input-line' noGutters>
-          <Col
-            
-            style={{ paddingLeft: '10px' }}
-            sm={3} 
-            md={3} 
-            lg={3}
-          >
-            <Form.Label className='form-block__input-title no-margin'>
-              Пароль еще раз
-            </Form.Label>
-          </Col>
-          <Col
-            
-            sm={5} 
-            md={5} 
-            lg={4}
-          >
-            <Form.Control type='password' className='form-block__input-field' size='sm'/>
-          </Col>
-          <Col
-            
-            sm={4} 
-            md={4} 
-            lg={5}
-          >
-            <div className='form-block__input-description'>
-              Повторите пароль, пожалуйста, это обезопасит нас с вами на случай ошибки.
-            </div>
-          </Col>
-        </Row>
+        <GreatHRComponent />
 
-        <hr className='no-margin' />
+        <CustomInput
+          title='Пароль'
+          description='Ваш новый пароль должен содержать не менее 5 символов.'
+          type='password'
+          name='password'
+          value={password}
+          valueError={passwordError}
+          valueHasError={passwordHasError}
+          focusHandler={focusHandler}
+          inputHandler={textInputHandler}
+        />
 
-        <Row className='form-block__input-line' noGutters>
-          <Col
-            className='d-flex align-items-center'
-            style={{ paddingLeft: '10px' }}
-            sm={3} 
-            md={3} 
-            lg={3}
-          >
-            <Form.Label className='form-block__input-title no-margin'>
-              Электронная почта
-            </Form.Label>
-          </Col>
-          <Col
-            className='d-flex align-items-center'
-            sm={5} 
-            md={5} 
-            lg={4}
-          >
-            <Form.Control className="form-block__input-field" size="sm"/>
-          </Col>
-          <Col
-            className='d-flex align-items-center'
-            sm={4} 
-            md={4} 
-            lg={5}
-          >
-            <div className="form-block__input-description">
-              Можно изменить адрес, указанный при регстрации.
-            </div>
-          </Col>
-        </Row>
+        <CustomInput
+          title='Пароль еще раз'
+          description='Повторите пароль, пожалуйста, это обезопасит нас с вами на случай ошибки.'
+          type='password'
+          name='checking-password'
+          value={checkingPassword}
+          valueError={checkingPasswordError}
+          valueHasError={checkingPasswordHasError}
+          focusHandler={focusHandler}
+          inputHandler={textInputHandler}
+        />
 
-        <Row style={{ height: '40px'}} className='form-block__input-line' noGutters>
-          <Col
-            className='d-flex align-items-center'
-            style={{ paddingLeft: '10px' }}
-            sm={3} 
-            md={3} 
-            lg={3}
-          >
-            <Form.Label className='form-block__input-title no-margin'>
-              Я согласен
-            </Form.Label>
-          </Col>
-          <Col
-            className='d-flex align-items-center'
-            sm={7} 
-            md={6} 
-            lg={5}
-            xl={4}
-          >
-            <Form.Check type="checkbox" className='form-block__input-type_checkbox' label="" />
-            <div className='form-block__input-type_checkbox-description'>
-              принимать актуальную информацию на емейл
-            </div>
-          </Col>
-        </Row>
+        <GreatHRComponent />
 
-        <Row style={{ height: '80px'}} className='form-block__input-line' noGutters>
-          <Col
-            className='d-flex align-items-center'
-            sm={{ span: 7, offset: 3 }} 
-            md={{ span: 5, offset: 3 }} 
-            lg={{ span: 5, offset: 3 }}
-          >
-            <Button className='form-block__input-type_button_change-button' disabled>
-              Изменить
-            </Button>
-            <div className='form-block__input-description'>
-              последние изменения 15 мая 2012 в 14:55:17
-            </div>
-          </Col>
-        </Row>
+        <CustomInput
+          title='Электронная почта'
+          description='Можно изменить адрес, указанный при регстрации.'
+          type='email'
+          name='email'
+          value={email}
+          valueError={emailError}
+          valueHasError={emailHasError}
+          focusHandler={focusHandler}
+          inputHandler={textInputHandler}
+        />
+
+        <CustomCheckbox
+          title='Я согласен'
+          description='принимать актуальную информацию на емейл'
+          value={approveMailing}
+          changeHandler={toggleMailing}
+        />
+
+        <SubmitButton
+          isDisabled={isFormValid}
+          handleSubmit={saveChangesHandler}
+          lastChanges={lastChanges}
+        />
 
       </Container>
     </Container>
