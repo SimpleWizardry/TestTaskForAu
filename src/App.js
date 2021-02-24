@@ -8,9 +8,6 @@ import SubmitButton from './js/components/submitButton/SubmitButton.js'
 import React, { useState, useEffect } from 'react';
 import {
     Container,
-    Row,
-    Col,
-    Button,
 } 
 from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';

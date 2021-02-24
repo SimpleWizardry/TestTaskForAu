@@ -1,0 +1,197 @@
+@import '../variables/variables';
+
+.form-block {
+    &__greetings {
+        &-row {
+            height: 34px;
+            width: 100%;
+            margin: 0;
+            padding-left: 10px;
+        }
+
+        &-text {
+            font-family: $default-font;
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 34.5px;
+            margin-left: 0;
+
+            @media (max-width: 1200px) { 
+                font-size: 24px;
+            }
+
+            @media (max-width: 990px) { 
+                font-size: 20px;
+            }
+
+            @media (max-width: 768px) { 
+                font-size: 18px;
+            }
+
+            @media (max-width: 576px) { 
+                font-size: 16px;
+            }
+
+            @media (max-width: 389px) { 
+                font-size: 14px;
+                line-height: inherit;
+            }    
+        }
+    }
+
+    &__change-status {
+        &-popover {
+            width: 276px;
+            padding-left: 5px;
+
+            @media (max-width: 768px) { 
+                width: 200px;
+                padding-left: 5px;
+            }        
+        }
+
+        &-line {
+            font-family: $default-font;
+            color: $default-blue;
+            font-size: 12px;
+            border-bottom: 1px dotted $default-blue;
+            width: 88px;
+            line-height: 12px;
+            margin-bottom: 0;
+            margin-top: 18px;
+
+            @media (max-width: 990px) { 
+                font-size: 11px;
+                width: 80px;
+            }
+
+            @media (max-width: 576px) { 
+                font-size: 9px;
+                width: 67px;
+                margin-top: 0;
+            }
+
+            &:hover {
+                color: $default-gray;
+                cursor: pointer;
+                border-bottom: none;        
+            }        
+        }
+    }
+
+    &__status {
+        &-holder {
+            height: 53px;
+
+            @media (max-width: 576px) { 
+                height: 30px;
+                margin-top: 20px;
+            }
+
+            @media (max-width: 389px) { 
+                height: 40px;
+                margin-top: 28px;
+            }
+        }
+
+        &-tooltip {
+            position: absolute;
+            width: 503px;
+            height: 44px;
+            top: 9px;
+            margin-left: $mrgn-ngtv-fix;
+            min-width: 200px;
+            text-align: left;
+            background: $bckgrnd-gray;
+            color: #404040; 
+            padding: 2% 2%;
+            font-size: 14px;
+            cursor: default;
+
+            @media (max-width: 1200px) { 
+                width: 400px;
+            }
+
+            @media (max-width: 990px) { 
+                width: 300px;
+                padding: 4% 4%;
+                font-size: 12px;
+                margin-left: 8px;
+            }
+
+            @media (max-width: 768px) { 
+                width: 280px;
+                padding: 7% 7%;
+                font-size: 11px;
+            }
+
+            @media (max-width: 576px) { 
+                position: static;
+                height: auto;
+                width: 60%;
+                padding: 2% 2%;
+                font-size: 10px;
+            }
+
+            @media (max-width: 389px) { 
+                height: auto;
+                width: 130px;
+                padding: 2% 2%;
+                font-size: 9px;
+            }
+
+            &::before{
+                content: '';
+                position: absolute;
+                bottom: 100%;
+                left: 2%;
+                border: 7px solid transparent;
+                border-bottom-color: #EAEAEA;
+
+                @media (max-width: 990px) { 
+                    left: 6%;
+                }
+
+                @media (max-width: 768px) { 
+                    left: 8%;
+                }
+
+                @media (max-width: 576px) { 
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.change-status_button {
+    margin-left: 146px;
+    margin-top: 12px;
+    font-size: 16px;
+    height: 34px;
+    width: 100px;
+
+    @media (max-width: 990px) { 
+        font-size: 14px;
+    }
+
+    @media (max-width: 768px) { 
+        font-size: 12px;
+        margin-left: 91px;
+        width: 80px;
+        height: 30px;
+        margin-top: 7px;
+    }
+}
+
+textarea.form-control {
+    height: auto;
+    width: 100%;
+    margin-left: $mrgn-ngtv-fix;
+    font-size: 12px;
+
+    @media (max-width: 768px) { 
+        width: 180px !important;
+        font-size: 10px !important;
+    }
+}

@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function CustomCheckbox({title,description,value,changeHandler}) {
 
   return (
-        <Row style={{ height: '40px'}} className='form-block__input-line' noGutters>
+        <Row className='form-block__input-line' noGutters>
           <Col
             className='d-flex align-items-center'
             style={{ paddingLeft: '10px' }}

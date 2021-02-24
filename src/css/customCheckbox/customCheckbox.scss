@@ -1,0 +1,28 @@
+@import '../variables/variables';
+
+.form-block {
+    &__input-type_checkbox {
+        margin-left: $mrgn-ngtv-fix;
+
+        @media (max-width: 990px) { 
+            margin-left: 8px;  
+        }
+    }
+
+    &__input-type_checkbox-description  {
+        font-family: $default-font;
+        font-size: 14px;
+
+        @media (max-width: 1200px) { 
+            font-size: 13px;   
+        }
+
+        @media (max-width: 990px) { 
+            font-size: 11px;   
+        }
+
+        @media (max-width: 389px) { 
+            font-size: 9px;   
+        }
+    }
+}
