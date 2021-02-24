@@ -1,2 +1,2 @@
 # TestTaskForAu
-Some practice with react
+Тестовое задание взято с https://github.com/Hexlet/ru-test-assignments
